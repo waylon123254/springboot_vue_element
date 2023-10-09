@@ -1,0 +1,9 @@
+
+demo/pom.xml
+demo/src/main/java/com/example/demo/DemoApplication.java
+demo/src/main/java/com/example/demo/demos/web/BasicController.java
+demo/src/main/java/com/example/demo/demos/web/PathVariableController.java
+demo/src/main/java/com/example/demo/demos/web/User.java
+demo/src/main/resources/application.properties
+demo/src/main/resources/static/index.html
+demo/src/test/java/com/example/demo/DemoApplicationTests.java
