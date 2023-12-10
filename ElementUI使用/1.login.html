@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration and Login</title>
+    <script src="./js/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <el-tabs v-model="activeTab" type="border-card">
+            <el-tab-pane label="注册" name="register">
+                <el-form ref="registerForm" :model="registerForm" label-position="top" label-width="80px"
+                    :rules="registerFormRules">
+                    <el-form-item label="用户名" prop="username" class="form-item">
+                        <el-input v-model="registerForm.username"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password" class="form-item">
+                        <el-input type="password" v-model="registerForm.password"></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码" prop="confirmPassword" class="form-item">
+                        <el-input type="password" v-model="registerForm.confirmPassword"></el-input>
+                    </el-form-item>
+                    <el-form-item class="form-item">
+                        <el-button type="primary" @click="register">注册</el-button>
+                        <el-button @click="resetForm('registerForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="登录" name="login">
+                <el-form ref="loginForm" :model="loginForm" label-position="top" label-width="80px">
+                    <el-form-item label="用户名" prop="username" class="form-item">
+                        <el-input v-model="loginForm.username"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password" class="form-item">
+                        <el-input type="password" v-model="loginForm.password"></el-input>
+                    </el-form-item>
+                    <el-form-item class="form-item">
+                        <el-button type="primary" @click="login">登录</el-button>
+                        <el-button @click="resetForm('loginForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    activeTab: 'login',
+                    registerForm: {
+                        username: '',
+                        password: '',
+                        confirmPassword: ''
+                    },
+                    loginForm: {
+                        username: '',
+                        password: ''
+                    },
+                    registerFormRules: {
+                        username: [
+                            { required: true, message: '请输入用户名', trigger: 'blur' }
+                        ],
+                        password: [
+                            { required: true, message: '请输入密码', trigger: 'blur' }
+                        ],
+                        confirmPassword: [
+                            { required: true, message: '请确认密码', trigger: 'blur' },
+                            { validator: this.validateConfirmPassword, trigger: 'blur' }
+                        ]
+                    }
+                };
+            },
+            methods: {
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                },
+                validateConfirmPassword(rule, value, callback) {
+                    if (value !== this.registerForm.password) {
+                        callback(new Error('两次输入的密码不一致'));
+                    } else {
+                        callback();
+                    }
+                },
+                register() {
+                    this.$refs.registerForm.validate((valid) => {
+                        if (valid) {
+                            // 发送注册请求
+                            const data = {
+                                username: this.registerForm.username,
+                                password: this.registerForm.password
+                            };
+                            // 发送注册请求的代码，根据实际情况进行实现
+                            console.log('注册成功', data);
+                        } else {
+                            console.log('注册失败');
+                            return false;
+                        }
+                    });
+                },
+                login() {
+                    this.$refs.loginForm.validate((valid) => {
+                        if (valid) {
+                            // 发送登录请求
+                            const data = {
+                                username: this.loginForm.username,
+                                password: this.loginForm.password
+                            };
+                            // 发送登录请求的代码，根据实际情况进行实现
+                            console.log('登录成功', data);
+                        } else {
+                            console.log('登录失败');
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
